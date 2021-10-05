@@ -13,10 +13,17 @@ class Book{
          <td>${book.title}</td>
          <td>${book.author}</td>
          <td>${book.isbn}</td>
-         <td><a href="#">X</a></td>
+         <td><a class='delete-item' href="#">X</a></td>
       `;
 
       list.appendChild(row);
+   }
+
+   // Delete Book
+   deleteBook(target){
+      if(target.className === 'delete-item'){
+         target.parentElement.parentElement.remove();
+      }
    }
 
    // Show Alert
@@ -37,7 +44,6 @@ class Book{
       }, 3000)
    }
 
-
    // Clear field
    clearFields = () => {
       document.getElementById('title').value = '';
@@ -45,7 +51,6 @@ class Book{
       document.getElementById('isbn').value = '';
    }
 }
-
 
 // Event Listener
 document.getElementById('book-form').addEventListener('submit', e =>{
@@ -73,6 +78,15 @@ document.getElementById('book-form').addEventListener('submit', e =>{
    }
    // Clear field values
    bookService.clearFields();
+
+   e.preventDefault();
+})
+
+document.getElementById('book-list').addEventListener('click', e =>{
+   const book = new Book();
+   book.deleteBook(e.target);
+   //Show alert delete book success
+   book.showAlert('Delete Book Success', 'alert alert-info')
 
    e.preventDefault();
 })
