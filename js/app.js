@@ -1,9 +1,13 @@
 // UI Book List constructor
 class Book{
-   constructor(){
+   constructor(title, author, isbn){
+      this.title = title;
+      this.author = author;
+      this.isbn = isbn;
    }
+}
 
-   // UI Constructor
+class UI{
    addBook(book){
       const list = document.getElementById('book-list');
       // Create tr element
@@ -55,38 +59,40 @@ class Book{
 // Event Listener
 document.getElementById('book-form').addEventListener('submit', e =>{
    //Get form values
-   const book = {
+   const bookValues = {
       'title': document.getElementById('title').value,
       'author': document.getElementById('author').value,
       'isbn': document.getElementById('isbn').value
    };
+   const {title, author, isbn} = bookValues;
 
    // instantiate book
-   const bookService = new Book();
+   const book = new Book(title, author, isbn);
+   const ui = new UI(book);
 
    try{
-      if(book.title !== '' || book.author !== '' || book.isbn !== ''){
+      if(title !== '' || author !== '' || isbn !== ''){
          // Add book to list
-         bookService.addBook(book);
-         bookService.showAlert('Add Book Success', 'alert alert-success')
+         ui.addBook(book);
+         ui.showAlert('Add Book Success', 'alert alert-success')
       }else{
-         bookService.showAlert('Please fill in all fields.', 'alert alert-danger');
+         ui.showAlert('Please fill in all fields.', 'alert alert-danger');
       }
    }
    catch(err){
       console.log(err);
    }
    // Clear field values
-   bookService.clearFields();
+   ui.clearFields();
 
    e.preventDefault();
 })
 
 document.getElementById('book-list').addEventListener('click', e =>{
-   const book = new Book();
-   book.deleteBook(e.target);
+   const ui = new UI();
+   ui.deleteBook(e.target);
    //Show alert delete book success
-   book.showAlert('Delete Book Success', 'alert alert-info')
+   ui.showAlert('Delete Book Success', 'alert alert-info')
 
    e.preventDefault();
 })
