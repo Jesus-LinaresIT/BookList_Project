@@ -58,6 +58,8 @@ class UI{
 
 // Local Storage Class
 class Store{
+
+   //Get book from localStorage
    static getBooks(){
       let books = [];
       if(localStorage.getItem('books')===null){
@@ -69,6 +71,15 @@ class Store{
       return books;
    }
 
+   // Add books to localStorage
+   static addBooks(book){
+      const books = Store.getBooks();
+      books.push(book);
+
+      localStorage.setItem('books', JSON.stringify(books));
+    }
+
+   // Display books ui from localStorage
    static displayBooks(book){
      const books = Store.getBooks();
 
@@ -77,17 +88,9 @@ class Store{
 
         ui.addBook(book);
      });
-
    }
 
-   static addBooks(book){
-     const books = Store.getBooks();
-     books.push(book);
-
-     localStorage.setItem('books', JSON.stringify(books));
-
-   }
-
+   // Remove books from localStorage
    static removeBooks(isbn){
       const books = Store.getBooks();
       books.forEach((book, index) => {
@@ -97,7 +100,6 @@ class Store{
       });
 
      localStorage.setItem('books', JSON.stringify(books));
-
    }
 }
 
